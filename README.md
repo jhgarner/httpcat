@@ -49,7 +49,7 @@ the program was started. After receiving a form submission, the program exits.
 
 ### Share one file with a friend?
 
-`httpcat 8787 send map.png < myMap.png`
+`httpcat 8787 send map.png < ~/myMap.png`
 
 ### Share multiple files with a friend?
 
@@ -61,10 +61,24 @@ the program was started. After receiving a form submission, the program exits.
 
 ### Receive multiple files with a friend?
 
-`httpcat 8787 receive | unzip /dev/stdin`
+`unzip =(httpcat 8787 receive)`
+
+Zip files are a little strange, but if you're using zsh then the above should
+work. Otherwise you'll need to write the zip file someplace temporary in
+between.
 
 ### Send data not in plain text
 
 Httpcat doesn't have any special support for https connections. Consider instead
 setting up a reverse proxy that'll forward plain traffic to your port of choice.
 You can use that port for other reasons if you need in the future.
+
+### Prevent others from reading the data?
+
+First, you probably need to setup https as mentioned above. There's no
+authentication builtin (that might be a good feature to add later), but the http
+server will only ever accept or share the data once before exiting. If you're
+sharing a file and the other person receives it, you can be certain that no one
+else downloaded it as well. Consider the amount of risk you're comfortable with
+before using. The risk should be low, but there are certainly more secure ways
+to share data.
