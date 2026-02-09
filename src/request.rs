@@ -66,7 +66,7 @@ impl Request {
     fn receive_until<W: Write>(&mut self, target: &[u8], mut write_to: W) -> Result<W> {
         let mut offset = 0;
         while let Some(b) = self.next()? {
-            if b == target[offset] {
+            if b.eq_ignore_ascii_case(&target[offset]) {
                 offset += 1;
                 if offset == target.len() {
                     break;
