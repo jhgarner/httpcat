@@ -15,8 +15,11 @@ pub fn run(
     for stream in listener.incoming() {
         let req = Request::new(stream?)?;
 
-        let status = if let cli::Send { file_name } = &mode {
-            download::send(req, file_name, BufReader::new(stdin()))
+        let status = if let cli::Send {
+            suggested_file_name,
+        } = &mode
+        {
+            download::send(req, suggested_file_name, BufReader::new(stdin()))
         } else {
             upload::save(req, BufWriter::new(stdout()))
         }?;

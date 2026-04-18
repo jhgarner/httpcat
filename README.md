@@ -1,17 +1,17 @@
 # Httpcat
 
-Inspired by the way Netcat makes it easy to shuffle data between computers over
-a network, Httpcat makes it easy to shuffle data between your computer and a web
-browser. While Netcat is a general purpose networking tool, Httpcat is really
-just designed for sharing data between a web browser and stdout/stdin.
+Like how Netcat makes it easy to shuffle data between computers over a network,
+Httpcat makes it easy to shuffle data between your computer and a web browser.
+While Netcat is a general purpose networking tool, Httpcat is really just
+designed for sharing data between a web browser and stdout/stdin.
 
 ## Why?
 
 Because I always have a few ports forwarded to my desktop, one of my favorite
-ways to share files larger than something like Discord accepts is to use the
-Python http server module. It's a super convenient way to share the contents of
-a directory that's both non-technical for the other person and doesn't require a
-bunch of accounts or other tools.
+ways to share files larger than something Discord accepts is to use the Python
+http server module. It's a super convenient way to share the contents of
+a directory that's both non-technical for the other person and doesn't require
+a bunch of accounts or other tools.
 
 While that's a great way for me to share files with other people, it doesn't
 help if I want the other person to share a file with me. It's also less great if
@@ -20,19 +20,19 @@ directory. If I were sending files between my own devices or other Linux users,
 I might use Netcat. Although that's kind of fun, sometimes you just want
 something that'll work without a lot of explanation.
 
-Httpcat combines the flexibility of Netcat with how easy it is for someone else
-to interact with the python directory server. Locally Httpcat interacts with
-your stdin and stdout. You can use redirection to work with individual files,
-you can type in or read your own messages directly from the terminal, or you can
-pipe to or from other commands. For example, you can pipe the output of the tar
-or zip commands to share collections of files. Similarly, you can pipe directly
-into another app if you want to avoid intermediate files. This gives you a lot
-of flexibility!
+Httpcat combines the flexibility of Netcat with the ease of use of python's
+directory server. Locally Httpcat interacts with your stdin and stdout. You can
+use redirection to work with individual files, you can type in or read your own
+messages directly from the terminal, or you can pipe to or from other commands.
+For example, you can pipe the output of the tar or zip commands to share
+collections of files. Similarly, you can pipe directly into another app if you
+want to avoid intermediate files. This gives you a lot of flexibility!
 
-On the other side, Httpcat exposes a simple interface that anyone with a web
-browser can use. They just upload their file like on any other website, press
-submit, and that's it. It's similarly easy to download a file. The interface is
-so simple it should load perfectly well even from a TUI web browser.
+On the other user's perspective, Httpcat exposes a simple interface that anyone
+with a web browser can use. They just upload their file like on any other
+website, press submit, and that's it. It's similarly easy to download a file.
+The interface is so simple it should load perfectly well even from a TUI web
+browser (although people using a TUI web browser probably have netcat too).
 
 Ultimately that's the power of Httpcat: It gives technical users plenty of
 flexibility by integrating with the rest of their environment without requiring
@@ -55,11 +55,11 @@ the program was started. After receiving a form submission, the program exits.
 
 `zip - Cargo.lock Cargo.toml | httpcat 8787 send Cargo.zip`
 
-### Receive a file from a friend
+### Receive a file from a friend?
 
 `httpcat 8787 receive > map.png`
 
-### Receive multiple files with a friend?
+### Receive multiple files from a friend?
 
 `unzip =(httpcat 8787 receive)`
 
@@ -67,7 +67,7 @@ Zip files are a little strange, but if you're using zsh then the above should
 work. Otherwise you'll need to write the zip file someplace temporary in
 between.
 
-### Send data not in plain text
+### Send data that can't be read during transit
 
 Httpcat doesn't have any special support for https connections. Consider instead
 setting up a reverse proxy that'll forward plain traffic to your port of choice.
@@ -77,8 +77,8 @@ You can use that port for other reasons if you need in the future.
 
 First, you probably need to setup https as mentioned above. There's no
 authentication builtin (that might be a good feature to add later), but the http
-server will only ever accept or share the data once before exiting. If you're
-sharing a file and the other person receives it, you can be certain that no one
-else downloaded it as well. Consider the amount of risk you're comfortable with
-before using. The risk should be low, but there are certainly more secure ways
-to share data.
+server will only ever accept or share the data once before exiting. If you
+shared a file and the other person received it, you can be certain that no one
+else downloaded it as well (assuming you used https). Consider the amount of
+risk you're comfortable with before using httpcat. The risk should be low, but
+there are certainly more secure ways to share sensitive data.

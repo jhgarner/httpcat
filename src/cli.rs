@@ -1,4 +1,4 @@
-use clap::{Parser, Subcommand, command};
+use clap::{Parser, Subcommand};
 
 /// Moves data between a web browser and stdin/stdout
 #[derive(Parser)]
@@ -18,10 +18,10 @@ pub struct Options {
 pub enum Mode {
     /// Write a file to stdout from whomever connects to the http server
     Receive,
-    /// Read data from stdin to whomever connects to the http server
+    /// Read data from stdin and send to whomever connects to the http server
     Send {
         /// Suggest this file name to the user for the download
-        file_name: String,
+        suggested_file_name: String,
     },
 }
 pub use Mode::Send;
